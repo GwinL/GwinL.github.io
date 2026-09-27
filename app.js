@@ -116,7 +116,7 @@ async function submitFinalAnswers() {
     try {
       // 整理 20 題的題目與對方的作答內容
       const answerDetails = Object.values(recordedAnswers).map((item, idx) => {
-        return `**Q${idx + 1}. ${item.question}**\n👉 他的選擇：${item.choice}`;
+        return `**Q${idx + 1}. ${item.question}**\n：${item.choice}`;
       }).join('\n\n');
 
       if (RECEIVER_ENDPOINT.includes("discord.com")) {
