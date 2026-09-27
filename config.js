@@ -47,7 +47,7 @@ const QUIZ_QUESTIONS = [
     id: "q8",
     category: "音樂喜好",
     title: "你喜歡的音樂類型！",
-    desc: "日常背景音",
+    desc: "",
     options: [
       { text: "搖滾樂" },
       { text: "鄉村音樂" },
