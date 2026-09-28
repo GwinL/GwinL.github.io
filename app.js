@@ -81,6 +81,17 @@ function handleOptionSelect(optIndex) {
   document.getElementById('my-choice-text').innerText = q.myAnswerText;
   document.getElementById('my-choice-note').innerText = q.myAnswerNote;
 
+  // 顯示或隱藏這一題的圖片
+  const answerImage = document.getElementById('my-choice-image');
+
+  if (q.myAnswerImage) {
+    answerImage.src = q.myAnswerImage;
+    answerImage.classList.remove('hidden');
+  } else {
+    answerImage.src = '';
+    answerImage.classList.add('hidden');
+  }
+
   const isLast = (currentIndex === QUIZ_QUESTIONS.length - 1);
   document.getElementById('next-step-btn-text').innerText = isLast ? "完成作答！" : "下一題";
 
