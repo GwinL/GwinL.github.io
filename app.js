@@ -5,12 +5,26 @@ window.addEventListener('DOMContentLoaded', () => {
   // 載入自介資料
   document.getElementById('intro-name').innerText = MY_PROFILE.name;
   document.getElementById('intro-avatar').src = MY_PROFILE.avatar;
-  document.getElementById('intro-mbti').innerText = MY_PROFILE.mbti;
   document.getElementById('intro-location').innerText = MY_PROFILE.location;
   document.getElementById('intro-bio').innerText = MY_PROFILE.bio;
   document.getElementById('intro-good').innerText = MY_PROFILE.goodPoints;
   document.getElementById('intro-bad').innerText = MY_PROFILE.badPoints;
+
+  // Red Flags（HTML 加入第三格後就會顯示）
+  const redFlagsEl = document.getElementById('intro-red');
+  if (redFlagsEl) {
+    redFlagsEl.innerText = MY_PROFILE.redFlags;
+  }
+
   document.getElementById('header-title').innerText = `${MY_PROFILE.name} 的徵友問答`;
+
+  // 題目總數自動依 config.js 計算
+  const totalQuestions = QUIZ_QUESTIONS.length;
+
+  const startBtnText = document.getElementById('start-btn-text');
+  if (startBtnText) {
+    startBtnText.innerText = `開始互動（共 ${totalQuestions} 題）`;
+  }
 
   const tagsContainer = document.getElementById('intro-tags');
   tagsContainer.innerHTML = MY_PROFILE.tags.map(tag => `
@@ -92,7 +106,9 @@ function showPage(pageId) {
     const el = document.getElementById(id);
     if (el) el.classList.add('hidden');
   });
+
   const target = document.getElementById(pageId);
+
   if (target) {
     target.classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -106,43 +122,67 @@ async function submitFinalAnswers() {
   const note = document.getElementById('resp-note').value.trim();
 
   if (!name || !contact) {
-    alert("請留下你的稱呼與聯絡方式！");
+    alert("請留下妳的稱呼與聯絡方式！");
     return;
   }
 
   const feedbackEl = document.getElementById('submit-feedback');
+  const totalQuestions = QUIZ_QUESTIONS.length;
 
   if (RECEIVER_ENDPOINT) {
     try {
-      // 整理 20 題的題目與對方的作答內容
+
+      // 整理所有題目與對方的作答內容
       const answerDetails = Object.values(recordedAnswers).map((item, idx) => {
         return `**Q${idx + 1}. ${item.question}**\n：${item.choice}`;
       }).join('\n\n');
 
       if (RECEIVER_ENDPOINT.includes("discord.com")) {
+
         await fetch(RECEIVER_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+
           body: JSON.stringify({
-            content: `📬 **收到來自 ${name} 的 13 題測驗回覆！**`,
+            content: `📬 **收到來自 ${name} 的 ${totalQuestions} 題測驗回覆！**`,
+
             embeds: [
               {
                 title: `作答者：${name}`,
                 color: 3888374,
+
                 fields: [
-                  { name: "聯絡方式", value: contact, inline: true },
-                  { name: "留言備註", value: note || "無", inline: false },
-                  { name: "📋 13 題完整作答明細", value: answerDetails.slice(0, 1024), inline: false }
+                  {
+                    name: "聯絡方式",
+                    value: contact,
+                    inline: true
+                  },
+                  {
+                    name: "留言備註",
+                    value: note || "無",
+                    inline: false
+                  },
+                  {
+                    name: `📋 ${totalQuestions} 題完整作答明細`,
+                    value: answerDetails.slice(0, 1024),
+                    inline: false
+                  }
                 ]
               }
             ]
           })
         });
+
       } else {
+
         // Formspree / 自訂 API
         await fetch(RECEIVER_ENDPOINT, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+
           body: JSON.stringify({
             name,
             contact,
@@ -152,29 +192,43 @@ async function submitFinalAnswers() {
           })
         });
       }
+
       feedbackEl.innerText = "✓ 回覆與作答明細已即時傳送給我！";
       feedbackEl.className = "text-xs text-emerald-600 mt-1 font-semibold";
+
     } catch (err) {
       feedbackEl.innerText = "不知道哪裡出問題了";
     }
+
   } else {
     feedbackEl.innerText = "不知道哪裡出問題了";
   }
 
   // 破冰訊息
-  const iceText = `嗨！我剛剛做完了你的 13 題認識對方的互動 ✨ 我是 ${name} (${contact})！`;
+  const iceText = `嗨！我剛剛做完了你的 ${totalQuestions} 題認識對方的互動 ✨ 我是 ${name} (${contact})！`;
+
   document.getElementById('icebreaker-msg').innerText = iceText;
 
   showPage('page-result');
-  confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+
+  confetti({
+    particleCount: 80,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
 }
 
 // 複製破冰訊息
 function copyIcebreakerMessage() {
   const msg = document.getElementById('icebreaker-msg').innerText;
+
   navigator.clipboard.writeText(msg).then(() => {
     const label = document.getElementById('copy-btn-label');
+
     label.innerText = "已複製！直接去私訊";
-    setTimeout(() => { label.innerText = "一鍵複製我是誰"; }, 2500);
+
+    setTimeout(() => {
+      label.innerText = "一鍵複製我是誰";
+    }, 2500);
   });
 }
