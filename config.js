@@ -2,7 +2,7 @@
    1. 遠端接收端點
    Discord 我們最後再設定
 ========================================== */
-const RECEIVER_ENDPOINT = https://discord.com/api/webhooks/1553985288362262580/9U7YDI2E6dBl6kzo013b7o1rOoLcch3WedwrSeXU8OhhRIycLP-N0ZCDRXWci07f0nuW;
+const RECEIVER_ENDPOINT = "https://discord.com/api/webhooks/1553985288362262580/9U7YDI2E6dBl6kzo013b7o1rOoLcch3WedwrSeXU8OhhRIycLP-N0ZCDRXWci07f0nuW";
 
 
 /* ==========================================
