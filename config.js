@@ -11,7 +11,7 @@ const RECEIVER_ENDPOINT = "";
 const MY_PROFILE = {
   name: "Gwin",
   location: "高雄",
-  avatar: "./IMG_3241.jpg",
+  avatar: "./gwin.jpg",
 
   bio: `首先謝謝妳願意點進來填寫這份問卷！
 
