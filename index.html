@@ -53,55 +53,51 @@
       <section class="ui-card p-6 sm:p-8 space-y-6">
 
 
-        <!-- 頭像與基本資料 -->
-        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-5">
+      <!-- 頭像與基本資料 -->
+<div class="space-y-5">
 
-          <img
-            id="intro-avatar"
-            src=""
-            alt="Avatar"
-            class="w-24 h-24 rounded-2xl object-cover border-2 border-slate-100 shadow-md shrink-0">
+  <!-- 頭像 / 名字 / 地區 -->
+  <div class="flex items-center gap-4">
 
+    <img
+      id="intro-avatar"
+      src=""
+      alt="Avatar"
+      class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-2 border-slate-100 shadow-md shrink-0">
 
-          <div class="flex-1 text-center sm:text-left space-y-2">
+    <div class="flex-1">
 
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+      <h1
+        class="text-2xl font-extrabold tracking-tight text-slate-900"
+        id="intro-name">
+      </h1>
 
-              <h1
-                class="text-2xl font-extrabold tracking-tight text-slate-900"
-                id="intro-name">
-              </h1>
+      <div class="flex items-center gap-1.5 text-xs mt-2">
 
-              <!-- 只保留地區，不顯示 MBTI -->
-              <div class="flex items-center justify-center gap-1.5 text-xs">
+        <span
+          class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200"
+          id="intro-location">
+        </span>
 
-                <span
-                  class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200"
-                  id="intro-location">
-                </span>
+      </div>
 
-              </div>
+    </div>
 
-            </div>
+  </div>
 
+  <!-- Bio -->
+  <p
+    class="text-slate-600 text-sm leading-relaxed whitespace-pre-line text-left"
+    id="intro-bio">
+  </p>
 
-            <!-- Bio -->
-            <p
-              class="text-slate-600 text-sm leading-relaxed whitespace-pre-line"
-              id="intro-bio">
-            </p>
+  <!-- 標籤 -->
+  <div
+    class="flex flex-wrap gap-1.5 pt-1 justify-start"
+    id="intro-tags">
+  </div>
 
-
-            <!-- 標籤 -->
-            <div
-              class="flex flex-wrap gap-1.5 pt-1 justify-center sm:justify-start"
-              id="intro-tags">
-            </div>
-
-          </div>
-
-        </div>
-
+</div>
 
 
         <!-- Good / Bad / Red Flags -->
